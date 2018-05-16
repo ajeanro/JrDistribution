@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using JrDistribution.Data;
 using JrDistribution.Models;
 using JrDistribution.Services;
+using Infrastructure;
 
 namespace JrDistribution
 {
@@ -27,6 +28,9 @@ namespace JrDistribution
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddDbContext<DistributionContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
